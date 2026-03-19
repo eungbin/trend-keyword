@@ -68,3 +68,6 @@ trend-keyword/
 └── utils/
     └── keywordProcessor.ts     # 키워드 추출·정제·필터링
 ```
+
+## 배포 url
+https://trend-keyword.vercel.app/
