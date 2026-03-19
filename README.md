@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 트렌드 키워드
 
-## Getting Started
+블로그 포스팅을 위한 공모전·경진대회 트렌드 키워드 수집 및 시각화 웹 서비스
 
-First, run the development server:
+## 기능
+
+- **키워드 랭킹** — 네이버 DataLab·뉴스 API 기반 공모전/경진대회 인기 키워드 순위
+- **워드 클라우드** — 키워드 빈도를 시각화 (파란색: 검색 트렌드, 초록색: 뉴스)
+- **핫 주제 모달** — 키워드 클릭 시 관련 뉴스 20건을 관련도 순으로 표시
+- **카테고리 필터** — 전체 / 검색 트렌드 / 뉴스 탭 전환
+
+## 기술 스택
+
+| 분류 | 기술 |
+|------|------|
+| 프레임워크 | Next.js 16 (App Router) |
+| 언어 | TypeScript |
+| 스타일 | Tailwind CSS v4 |
+| 시각화 | D3.js, d3-cloud |
+| 데이터 소스 | 네이버 DataLab API, 네이버 뉴스 API |
+| 배포 | Vercel |
+
+## 시작하기
+
+### 1. 의존성 설치
+
+```bash
+npm install
+```
+
+### 2. 환경변수 설정
+
+`.env.local` 파일을 생성하고 네이버 개발자센터에서 발급받은 API 키를 입력합니다.
+
+```env
+NAVER_CLIENT_ID=your_client_id
+NAVER_CLIENT_SECRET=your_client_secret
+```
+
+> 네이버 API 키 발급: https://developers.naver.com/apps
+
+### 3. 개발 서버 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`http://localhost:3000` 에서 확인합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 폴더 구조
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+trend-keyword/
+├── app/
+│   ├── api/
+│   │   ├── trends/route.ts     # 네이버 DataLab API (검색 트렌드)
+│   │   ├── news/route.ts       # 네이버 뉴스 API (키워드 추출)
+│   │   └── related/route.ts    # 키워드별 관련 뉴스 검색
+│   ├── page.tsx                # 메인 대시보드
+│   └── layout.tsx
+├── components/
+│   ├── KeywordList.tsx         # 키워드 랭킹 목록
+│   ├── WordCloud.tsx           # 워드 클라우드
+│   ├── CategoryFilter.tsx      # 카테고리 필터
+│   └── KeywordDetailModal.tsx  # 핫 주제 모달
+├── hooks/
+│   └── useKeywords.ts          # 키워드 데이터 페칭 훅
+└── utils/
+    └── keywordProcessor.ts     # 키워드 추출·정제·필터링
+```
